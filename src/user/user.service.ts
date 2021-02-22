@@ -1,14 +1,8 @@
-import {
-  ConflictException,
-  Injectable,
-  Logger,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { ConflictException, Injectable, Logger } from '@nestjs/common';
 import { CreateUserRequestDto } from './dto/create-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UserRepository } from './repository/user.repository';
 import * as bcrypt from 'bcrypt';
-import { SigninDto } from './dto/signin.dto';
 import { User } from './entity/user.entity';
 
 @Injectable()
@@ -55,30 +49,14 @@ export class UserService {
         10,
       );
 
-      return await this.userRepository.create(createUserRequestDto).save();
-    } catch (err) {
-      throw err;
-    }
-  }
+      const {
+        uuid,
+        username,
+        createdAt,
+        updatedAt,
+      } = await this.userRepository.create(createUserRequestDto).save();
 
-  async signin(signinDto: SigninDto): Promise<UserDto> {
-    try {
-      const user = await this.userRepository.findOne({
-        username: signinDto.username,
-      });
-      if (!user) {
-        throw new UnauthorizedException('Username or password incorrect');
-      }
-
-      const isPasswordCorrect = bcrypt.compare(
-        signinDto.password,
-        user.password,
-      );
-      if (!isPasswordCorrect) {
-        throw new UnauthorizedException('Username or password incorrect');
-      }
-
-      return { uuid: user.uuid, username: user.username };
+      return { uuid, username, createdAt, updatedAt };
     } catch (err) {
       throw err;
     }

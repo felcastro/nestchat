@@ -1,0 +1,12 @@
+{
+  "globalSetup": "./test/unit/setup.ts",
+  "modulePaths": ["../../", "<rootDir>"],
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "modulePathIgnorePatterns": ["./test/e2e/"],
+  "rootDir": "../../",
+  "testEnvironment": "node",
+  "testRegex": ".spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  }
+}

@@ -6,14 +6,13 @@ import {
   Res,
   Body,
   Get,
-  Query,
   Param,
 } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { Response } from 'express';
+import { Public } from 'src/shared/decorator/public.decorator';
 import { CreateUserRequestDto } from './dto/create-user.dto';
 import { GetUserRequestDto } from './dto/get-user.dto';
-import { SigninDto } from './dto/signin.dto';
 import { UserDto } from './dto/user.dto';
 import { UserService } from './user.service';
 
@@ -21,16 +20,8 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // @Get('/signin')
-  // @HttpCode(HttpStatus.OK)
-  // @ApiOkResponse({ type: UserDto, isArray: true })
-  // async list(@Query() params: SigninDto, @Res() res: Response): Promise<void> {
-  //   const { user, token } = await this.userService.signin(params);
-
-  //   res.send(user);
-  // }
-
-  @Post('/signup')
+  @Public()
+  @Post()
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: UserDto })
   async signup(
