@@ -19,4 +19,14 @@ export class UserDto {
     },
   )
   username: string;
+
+  @ApiProperty(SwaggerProperties.shared.createdAt)
+  @IsString()
+  @IsNotEmpty()
+  createdAt: Date;
+
+  @ApiProperty(SwaggerProperties.shared.updatedAt)
+  @IsString()
+  @IsNotEmpty()
+  updatedAt: Date;
 }

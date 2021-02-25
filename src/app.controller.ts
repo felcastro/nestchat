@@ -13,9 +13,13 @@ export class AppController {
     return { status: 'ok' };
   }
 
+  @Public()
   @Get('/status')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @HttpCode(HttpStatus.OK)
   async status() {
-    return this.connection.query('SELECT 1');
+    const [{ database }] = await this.connection.query(
+      "SELECT 'CONNECTED' AS database",
+    );
+    return { database };
   }
 }
